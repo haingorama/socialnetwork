@@ -26,8 +26,25 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
       <ul class="navbar-nav mr-auto">
       </ul>
+      <!-- exercice 2 -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <form class="nav-link" method="get">
+            <input name="search" type="text"></input>
+          </form>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="?action=login" role="button">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="?action=register" role="button">Sign Up</a>
+        </li>
+      </ul>
+      <!-- fin section search -->
+
       <ul class="navbar-nav">
         <li class="nav-item">
           <a class="nav-link" href="?action=login" role="button">Login</a>
@@ -36,6 +53,7 @@
           <a class="nav-link" href="?action=register" role="button">Sign Up</a>
         </li>
       </ul>
+
     </div>
   </header>
 

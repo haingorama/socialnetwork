@@ -25,3 +25,15 @@ function GetAllPostsFromUserId($userId) //se référer à la partie Commentaire 
   $response = $PDO->query("SELECT * FROM post WHERE user_id = $userId ORDER BY created_at DESC");
   return $response->fetchAll();
 }
+
+function SearchInPosts($search)
+{
+  global $PDO;
+  $response = $PDO->query(
+    "SELECT post.*, user.nickname "
+      . "FROM post LEFT JOIN user on (post.user_id = user.id) "
+      . "WHERE content like '%$search%' "
+      . "ORDER BY post.created_at DESC"
+  );
+  return $response->fetchAll();
+}

@@ -32,8 +32,18 @@ switch ($action) {
 
   case 'display': //si aucune des valeur correspond à ces actes il va directement ici 
   default:
-    include "../models/PostManager.php"; //si de base la requette est envoyer en Get > inclue le post fichier manager
-    $posts = GetAllPosts();
+
+    //Exercice 2 Modif search
+    include "../models/PostManager.php";
+    if (isset($_GET['search'])) {
+      $posts = SearchInPosts($_GET['search']);
+    } else {
+      $posts = GetAllPosts();
+    }
+
+    //Exercice 1 Modif commentaires
+    /*include "../models/PostManager.php"; //si de base la requette est envoyer en Get > inclue le post fichier manager
+    $posts = GetAllPosts();*/
 
     include "../models/CommentManager.php"; // écrit tous les commentaires du tableau çi-dessous
     $comments = array();
@@ -43,6 +53,7 @@ switch ($action) {
       $commentsForThisPostId = GetAllCommentsFromPostId($postId);
       $comments[$postId] = $commentsForThisPostId;
     }
+
     include "../views/DisplayPosts.php"; // après les commentaires il va faire au fichier DisplayPost.php pour y mettre les faux commentaires
     break;
 }
