@@ -14,12 +14,27 @@ switch ($action) {
     // code...
     break;
 
-  case 'logout': //si $action vaut logout il va ici 
-    // code...
+  case 'logout':
+    if (isset($_SESSION['userId'])) {
+      unset($_SESSION['userId']);
+    }
+    header('Location: ?action=display');
     break;
 
-  case 'login': //si $action vaut login il va ici ainsi desuite pour le reste
-    // code...
+  case 'login':
+    include "../models/UserManager.php";
+    if (isset($_POST['username']) && isset($_POST['password'])) {
+      $userId = GetUserIdFromUserAndPassword($_POST['username'], $_POST['password']);
+      if ($userId > 0) {
+        $_SESSION['userId'] = $userId;
+        header('Location: ?action=display');
+      } else {
+        $errorMsg = "Wrong login and/or password.";
+        include "../views/LoginForm.php";
+      }
+    } else {
+      include "../views/LoginForm.php";
+    }
     break;
 
   case 'newMsg':
