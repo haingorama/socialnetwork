@@ -1,18 +1,24 @@
 <?php
 
-$action = $_GET["action"] ?? "display";
+//Version opération terner
+//$action = $_GET["action"] ?? "display";
+/*$action = "display";
+if (isset($_GET["action"])) {
+  $action = $_GET["action"];
+}*/
+$action = isset($_GET["action"]) ? $_GET["action"] : "display"; //opérateur coallesc c'est la même chose
 
 switch ($action) {
 
-  case 'register':
+  case 'register': //si $action vaut enregistrer il va là
     // code...
     break;
 
-  case 'logout':
+  case 'logout': //si $action vaut logout il va ici 
     // code...
     break;
 
-  case 'login':
+  case 'login': //si $action vaut login il va ici ainsi desuite pour le reste
     // code...
     break;
 
@@ -24,26 +30,19 @@ switch ($action) {
     // code...
     break;
 
-  case 'display':
+  case 'display': //si aucune des valeur correspond à ces actes il va directement ici 
   default:
-    include "../models/PostManager.php";
+    include "../models/PostManager.php"; //si de base la requette est envoyer en Get > inclue le post fichier manager
     $posts = GetAllPosts();
 
-    include "../models/CommentManager.php";
+    include "../models/CommentManager.php"; // écrit tous les commentaires du tableau çi-dessous
     $comments = array();
 
-    // ===================HARDCODED PART===========================
-    // format idPost => array of comments
-    $comments[1] = array(
-      array("nickname" => "FakeUser1", "created_at" => "1970-01-01 00:00:00", "content" => "Fake comment 01."),
-      array("nickname" => "FakeUser2", "created_at" => "1970-01-02 00:00:00", "content" => "Fake comment 02."),
-      array("nickname" => "FakeUser1", "created_at" => "1970-01-03 00:00:00", "content" => "Fake comment 03.")
-    );
-    $comments[3] = array(
-      array("nickname" => "FakeUser1", "created_at" => "1970-01-01 00:00:00", "content" => "Fake comment 04."),
-    );
-    // =============================================================
-
-    include "../views/DisplayPosts.php";
+    foreach ($posts as $onePost) { //va réitérer sur chacun des éléments
+      $postId = $onePost['id'];
+      $commentsForThisPostId = GetAllCommentsFromPostId($postId);
+      $comments[$postId] = $commentsForThisPostId;
+    }
+    include "../views/DisplayPosts.php"; // après les commentaires il va faire au fichier DisplayPost.php pour y mettre les faux commentaires
     break;
 }

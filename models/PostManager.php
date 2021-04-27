@@ -12,14 +12,14 @@ function GetAllPosts()
 {
   global $PDO;
   $response = $PDO->query(
-    "SELECT post.*, user.nickname "
-      . "FROM post LEFT JOIN user on (post.user_id = user.id) "
-      . "ORDER BY post.created_at DESC"
+    "SELECT post.*, user.nickname "  //récup tous les Posts avec les utilisateurs
+      . "FROM post LEFT JOIN user on (post.user_id = user.id) " //joint les tableaux de droite (post et comment) vers user(utilisateurs)
+      . "ORDER BY post.created_at DESC" //trie par ordre de date décroissant
   );
   return $response->fetchAll();
 }
 
-function GetAllPostsFromUserId($userId)
+function GetAllPostsFromUserId($userId) //se référer à la partie Commentaire dans controller.php pour mettre les commentaires
 {
   global $PDO;
   $response = $PDO->query("SELECT * FROM post WHERE user_id = $userId ORDER BY created_at DESC");

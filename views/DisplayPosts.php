@@ -54,7 +54,7 @@
       <div class="col">
         <?php
         if (isset($posts)) {
-          foreach ($posts as $onePost) {
+          foreach ($posts as $onePost) { // Boucle pour afficher les Posts qui se trouvent dans controller.php
         ?>
             <div class="panel panel-white post panel-shadow">
               <div class="post-heading">
