@@ -18,12 +18,16 @@ function GetAllUsers()
 function GetUserIdFromUserAndPassword($username, $password)
 {
   global $PDO;
-  $response = $PDO->query("SELECT * FROM user WHERE nickname = '$username' AND password = '$password'");
-  $users = $response->fetchAll();
-  $nbOfUsersWithThisPasswordAndNickname = count($users);
-  if ($nbOfUsersWithThisPasswordAndNickname == 1) {
-    $connectingUser = $users[0];
-    return $connectingUser['id'];
+  $response = $PDO->prepare("SELECT id FROM user WHERE nickname = :username AND password = MD5(:password) ");
+  $response->execute(
+    array(
+      "username" => $username,
+      "password" => $password
+    )
+  );
+  if ($response->rowCount() == 1) {
+    $row = $response->fetch();
+    return $row['id'];
   } else {
     return -1;
   }
