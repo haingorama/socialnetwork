@@ -18,20 +18,20 @@ switch ($action) {
         $errorMsg = "Nickname already used.";
       } else if ($_POST['password'] != $_POST['passwordRetype']) {
         $errorMsg = "Passwords are not the same.";
-      } else if (strlen(trim($_POST['password'])) < 8) {
+      } else if (strlen(trim($_POST['password'])) < 8) { //"trim" c'est les espaces dans le mdp
         $errorMsg = "Your password should have at least 8 characters.";
       } else if (strlen(trim($_POST['username'])) < 4) {
         $errorMsg = "Your nickame should have at least 4 characters.";
       }
-      if ($errorMsg) {
+      if ($errorMsg) { //si y a erreur va dans la div alert du "RegisterForm.php"
         include "../views/RegisterForm.php";
-      } else {
+      } else { //entre dans le formulaire
         $userId = CreateNewUser($_POST['username'], $_POST['password']);
         $_SESSION['userId'] = $userId;
         header('Location: ?action=display');
       }
     } else {
-      include "../views/RegisterForm.php";
+      include "../views/RegisterForm.php"; //sinon redirige pour refaire toute la boucle complète
     }
     break;
 
